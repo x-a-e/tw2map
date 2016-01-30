@@ -210,24 +210,23 @@ p['kwoz nation'] = '2';
 			return village.tribe_id==tribeId;
 		});
 
+
 		$(v).each(function(vidx, village) {
 			var arr = [ village.x, village.y ];
 			var title = village.x + "|" + village.y + " / " + village.points + " / " + village.character_name;
-			if ( village.points > minPoints ) {
+			if ( village.points > minPoints && village.tribe_id == 38 ) {
 				var row = [];
 				row.push(village.x);
-				for ( var t = 1; t <= numberTribes; t++) {
-					if (t == idx) { 
-						row.push(village.y);
-						if (typeof p[village.character_name] !== 'undefined') {
-							row.push(p[village.character_name] + " / " + village.character_name);
-						} else {
-							row.push("** TBD ** / " + village.character_name);
-						}
-					} else {
-						row.push(null);
-						row.push(null);
-					}
+				if (typeof p[village.character_name] !== 'undefined') {
+					row.push(village.y);
+					row.push(p[village.character_name] + " / " + village.character_name);
+					row.push(null);
+					row.push(null);
+				} else {
+					row.push(null);
+					row.push(null);
+					row.push(village.y);
+					row.push("** TBD ** / " + village.character_name);
 				}
 				items.push(row);
 			}
@@ -297,6 +296,13 @@ p['kwoz nation'] = '2';
                         role: 'tooltip'
                     });
                 }
+                    dataTable.addColumn('number', "Unassigned Players");
+                    dataTable.addColumn({
+                        type: 'string',
+                        label: 'Tribe ' + n,
+                        role: 'tooltip'
+                    });
+
                 dataTable.addRows(items);
                 var d = new Date();
                 var n = d.toUTCString();
