@@ -267,7 +267,7 @@
 		$(v).each(function(vidx, village) {
 			var arr = [ village.x, village.y ];
 			var title = village.x + "|" + village.y + " / " + village.points + " / " + village.character_name;
-			if ( village.points > minPoints && (village.tribe_id == 38)) {
+			if ( village.points > minPoints && (village.tribe_id == 38 || village.tribe_id == 27 )) {
 				var row = [];
 				row.push(village.x);
 				if (typeof p[village.character_name] !== 'undefined') {
