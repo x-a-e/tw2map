@@ -84,10 +84,7 @@
                 $("#quadrants").append("<p>" + player + " : " + p[q][player] + " / " + players[player] + " (" + Math.round(p[q][player]/players[player]*100) + "%)" + "</p>");
               }
             }
-            printQuad("NW");
-            printQuad("SW");
-            printQuad("SE");
-            printQuad("NE");
+
 
             $("#quadrants").append("<h1>Players/Areas</h1>");
             Object.keys(players).sort().forEach(function(player) {
@@ -113,6 +110,10 @@
 
             });
 
+            printQuad("NW");
+            printQuad("SW");
+            printQuad("SE");
+            printQuad("NE");
 
 
 
