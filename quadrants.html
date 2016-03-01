@@ -89,6 +89,32 @@
             printQuad("SE");
             printQuad("NE");
 
+            $("#quadrants").append("<h1>Players/Areas</h1>");
+            Object.keys(players).sort().forEach(function(player) {
+              console.log(player);
+              var s ="" + player + ": { ";
+              if (typeof p["NW"][player] != 'undefined') {
+                s += "NW: " + Math.round(p["NW"][player]/players[player]*100) + "% "
+              }
+              if (typeof p["SW"][player] != 'undefined') {
+                s += "SW: " + Math.round(p["SW"][player]/players[player]*100) + "% "
+              }
+              if (typeof p["SE"][player] != 'undefined') {
+                s += "SE: " + Math.round(p["SE"][player]/players[player]*100) + "% "
+              }
+              if (typeof p["NE"][player] != 'undefined') {
+                s += "NE: " + Math.round(p["NE"][player]/players[player]*100) + "% "
+              }
+
+              s+= "}";
+
+              $("#quadrants").append("<p>" + s + "</p>");
+
+
+            });
+
+
+
 
 
             // $.each( NW, function( player, count ) {
