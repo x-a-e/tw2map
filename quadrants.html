@@ -1,0 +1,111 @@
+<html>
+
+<head>
+    <title>Tribal Wars 2 - Map Generator</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div id="content"></div>
+
+    <script>
+
+
+
+
+
+
+          var villages;
+          var p = new Array();
+          var players = new Array();
+          p["NW"] = new Array();
+          p["NE"] = new Array();
+          p["SW"] = new Array();
+          p["SE"] = new Array();
+
+
+          $.getJSON( "villages.json", function( data ) {
+            villages = data.villages;
+
+
+            for (var i=0;i<villages.length;i++) {
+              v = villages[i];
+              if (v.tribe_id==38 || v.tribe_id==27) {
+                // console.log(v);
+
+                if (typeof players[v.character_name] == 'undefined') {
+                  players[v.character_name] = 1;
+                } else {
+                  players[v.character_name]++;
+                }
+
+                var q = "";
+                if (v.x <= 500 && v.y <= 500) {
+                  // NW
+                  q="NW";
+                } else if (v.x > 500 && v.y <= 500) {
+                  // NE
+                  q="NE";
+                } else if (v.x <= 500 && v.y > 500) {
+                  // SW
+                  q="SW";
+                } else if (v.x > 500 && v.y > 500) {
+                  // SE
+                  q="SE";
+                }
+                if (typeof p[q][v.character_name] == 'undefined') {
+                  p[q][v.character_name]=1;
+                } else {
+                  p[q][v.character_name]++;
+                }
+
+              }
+            }
+
+            console.log("Done processing... printing now");
+            console.log(p);
+
+
+
+            //console.log(p);
+            p["NW"].forEach(function(player,count) {
+              console.log(player + " : " + count + " / " + players[player] ); //+ " (" + Math.round((count/players[player]*100)) + ")");
+            });
+
+
+            function printQuad(q) {
+              $("#quadrants").append("<h1>"+q+"</h1>");
+              for (var player in p[q]) {
+                console.log(player + " : " + p[q][player] + " / " + players[player] + " (" + Math.round(p[q][player]/players[player]*100) + "%)");
+                $("#quadrants").append("<p>" + player + " : " + p[q][player] + " / " + players[player] + " (" + Math.round(p[q][player]/players[player]*100) + "%)" + "</p>");
+              }
+            }
+            printQuad("NW");
+            printQuad("SW");
+            printQuad("SE");
+            printQuad("NE");
+
+
+
+            // $.each( NW, function( player, count ) {
+            //   console.log(player);
+            //   // console.log(player + " : " + count + " / " + players[player] ); //+ " (" + Math.round((count/players[player]*100)) + ")");
+            // });
+
+
+
+
+
+        });
+
+
+    </script>
+
+    <div id="quadrants" />
+</body>
+
+</html>
