@@ -14,11 +14,6 @@
 
     <script>
 
-
-
-
-
-
           var villages;
           var p = new Array();
           var players = new Array();
@@ -27,7 +22,6 @@
           p["SW"] = new Array();
           p["SE"] = new Array();
 
-
           $.getJSON( "villages.json", function( data ) {
             villages = data.villages;
 
@@ -35,7 +29,6 @@
             for (var i=0;i<villages.length;i++) {
               v = villages[i];
               if (v.tribe_id==38) {
-                // console.log(v);
 
                 if (typeof players[v.character_name] == 'undefined') {
                   players[v.character_name] = 1;
@@ -67,15 +60,6 @@
             }
 
             console.log("Done processing... printing now");
-            console.log(p);
-
-
-
-            //console.log(p);
-            p["NW"].forEach(function(player,count) {
-              console.log(player + " : " + count + " / " + players[player] ); //+ " (" + Math.round((count/players[player]*100)) + ")");
-            });
-
 
             function printQuad(q) {
               $("#quadrants").append("<h1>"+q+"</h1>");
@@ -84,7 +68,6 @@
                 $("#quadrants").append("<p>" + player + " : " + p[q][player] + " / " + players[player] + " (" + Math.round(p[q][player]/players[player]*100) + "%)" + "</p>");
               }
             }
-
 
             $("#quadrants").append("<h1>Players/Areas</h1>");
             Object.keys(players).sort().forEach(function(player) {
@@ -102,30 +85,13 @@
               if (typeof p["NE"][player] != 'undefined') {
                 s += "NE: " + Math.round(p["NE"][player]/players[player]*100) + "% "
               }
-
               s+= "}";
-
               $("#quadrants").append("<p>" + s + "</p>");
-
-
             });
-
             printQuad("NW");
             printQuad("SW");
             printQuad("SE");
             printQuad("NE");
-
-
-
-
-            // $.each( NW, function( player, count ) {
-            //   console.log(player);
-            //   // console.log(player + " : " + count + " / " + players[player] ); //+ " (" + Math.round((count/players[player]*100)) + ")");
-            // });
-
-
-
-
 
         });
 
